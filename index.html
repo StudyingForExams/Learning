@@ -35,22 +35,16 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: linear-gradient(
-        120deg,
-        #050008,
-        #1a0033,
-        #090014,
-        #2b004f
-      );
-      background-size: 300% 300%;
-      animation: bgMove 12s ease infinite;
+      background: radial-gradient(circle at 50% 50%, rgba(140, 60, 255, 0.2) 0%, #050008 70%);
+      background-size: 200% 200%;
+      animation: bgShift 20s ease infinite;
       z-index: -3;
     }
 
-    @keyframes bgMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes bgShift {
+      0% { background-position: 20% 50%; }
+      50% { background-position: 80% 50%; }
+      100% { background-position: 20% 50%; }
     }
 
     /* ===== PARTICLES ===== */
@@ -79,16 +73,16 @@
       transition: opacity 0.35s ease;
     }
 
-    /* ===== OASIS LOGO WITH ROTATING SHIMMER ===== */
+    /* ===== OASIS LOGO ===== */
     #oasis-logo-container {
       position: fixed;
-      top: 120px; /* slightly below top, above title */
+      top: 120px;
       left: 50%;
       transform: translateX(-50%);
-      width: 140px;
-      height: 140px;
+      width: 120px; /* slightly smaller */
+      height: 120px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(180, 107, 255, 0.4) 60%, transparent 100%);
+      background: radial-gradient(circle, rgba(180, 107, 255, 0.3) 60%, transparent 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -104,23 +98,22 @@
       filter: drop-shadow(0 0 20px #c06cff)
               drop-shadow(0 0 35px #a64fff)
               drop-shadow(0 0 50px #8f3fff);
-      animation: pulse 2.5s ease-in-out infinite, shimmerRotate 12s linear infinite;
+      animation: pulse 2.5s ease-in-out infinite; /* removed shimmerRotate */
       transition: filter 0.3s ease, transform 0.3s ease;
       z-index: 6;
       position: relative;
     }
 
-    /* Rotating shimmer effect behind the logo */
+    /* Rotating shimmer effect behind the logo removed rotation */
     #oasis-logo-container::after {
       content: "";
       position: absolute;
       top: -20px;
       left: -20px;
-      width: 180px;
-      height: 180px;
+      width: 160px; /* smaller than before */
+      height: 160px;
       border-radius: 50%;
       background: conic-gradient(from 0deg, rgba(200,120,255,0.3), rgba(180,70,255,0.3), rgba(200,120,255,0.3));
-      animation: rotateHalo 8s linear infinite;
       z-index: 1;
     }
 
@@ -137,16 +130,6 @@
                 drop-shadow(0 0 45px #b46bff)
                 drop-shadow(0 0 60px #a64fff);
       }
-    }
-
-    @keyframes shimmerRotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes rotateHalo {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
 
     /* ===== FOOTER TEXT ===== */
