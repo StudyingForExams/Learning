@@ -8,12 +8,6 @@
   <!-- Bubble Font -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/oasis.png" />
-
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="images/oasis.png" />
-
   <style>
     /* ===== RESET ===== */
     * {
@@ -35,19 +29,25 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(140, 60, 255, 0.2) 0%, #050008 70%);
-      background-size: 200% 200%;
-      animation: bgShift 20s ease infinite;
+      background: linear-gradient(
+        120deg,
+        #050008,
+        #1a0033,
+        #090014,
+        #2b004f
+      );
+      background-size: 300% 300%;
+      animation: bgMove 12s ease infinite;
       z-index: -3;
     }
 
-    @keyframes bgShift {
-      0% { background-position: 20% 50%; }
-      50% { background-position: 80% 50%; }
-      100% { background-position: 20% 50%; }
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    /* ===== PARTICLES ===== */
+    /* ===== PARTICLE CANVAS ===== */
     canvas {
       position: fixed;
       inset: 0;
@@ -69,86 +69,8 @@
       text-shadow:
         0 0 12px rgba(200, 120, 255, 0.6),
         0 0 24px rgba(120, 60, 255, 0.4);
-      z-index: 5;
-      transition: opacity 0.35s ease;
-    }
-
-    /* ===== OASIS LOGO ===== */
-    #oasis-logo-container {
-      position: fixed;
-      top: 120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px; /* slightly smaller */
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(180, 107, 255, 0.3) 60%, transparent 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 5;
-      overflow: visible;
-      transition: opacity 0.3s ease;
-    }
-
-    #oasis-logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 20px #c06cff)
-              drop-shadow(0 0 35px #a64fff)
-              drop-shadow(0 0 50px #8f3fff);
-      animation: pulse 2.5s ease-in-out infinite; /* removed shimmerRotate */
-      transition: filter 0.3s ease, transform 0.3s ease;
-      z-index: 6;
-      position: relative;
-    }
-
-    /* Rotating shimmer effect behind the logo removed rotation */
-    #oasis-logo-container::after {
-      content: "";
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      width: 160px; /* smaller than before */
-      height: 160px;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, rgba(200,120,255,0.3), rgba(180,70,255,0.3), rgba(200,120,255,0.3));
-      z-index: 1;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 20px #c06cff)
-                drop-shadow(0 0 35px #a64fff)
-                drop-shadow(0 0 50px #8f3fff);
-      }
-      50% {
-        transform: scale(1.08);
-        filter: drop-shadow(0 0 30px #d8b4ff)
-                drop-shadow(0 0 45px #b46bff)
-                drop-shadow(0 0 60px #a64fff);
-      }
-    }
-
-    /* ===== FOOTER TEXT ===== */
-    #footer {
-      position: fixed;
-      bottom: 40px;
-      width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 0.4px;
-      z-index: 3;
-      transition: opacity 0.35s ease;
-    }
-
-    /* ===== HIDDEN STATE ===== */
-    .hidden {
-      opacity: 0;
       pointer-events: none;
+      z-index: 5;
     }
 
     /* ===== MENU ===== */
@@ -219,6 +141,19 @@
       transform: scale(1.1);
       background: rgba(60, 0, 120, 0.85);
     }
+
+    /* ===== FOOTER TEXT ===== */
+    #footer {
+      position: fixed;
+      bottom: 40px; /* leaves breathing room */
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.4px;
+      z-index: 3;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -229,18 +164,13 @@
   <!-- TITLE -->
   <div id="title">The Oasis</div>
 
-  <!-- OASIS LOGO -->
-  <div id="oasis-logo-container">
-    <img id="oasis-logo" src="images/oasis.png" alt="Oasis Logo">
-  </div>
-
   <!-- MENU -->
   <div id="menu">
-    <div class="btn" onclick="go('site1'); hideLogo()"><img src="images/btn1.png"></div>
-    <div class="btn" onclick="go('site2'); hideLogo()"><img src="images/btn2.png"></div>
-    <div class="btn" onclick="go('site3'); hideLogo()"><img src="images/btn3.png"></div>
-    <div class="btn" onclick="go('site4'); hideLogo()"><img src="images/btn4.png"></div>
-    <div class="btn" onclick="go('site5'); hideLogo()"><img src="images/btn5.png"></div>
+    <div class="btn" onclick="go('site1')"><img src="images/btn1.png"></div>
+    <div class="btn" onclick="go('site2')"><img src="images/btn2.png"></div>
+    <div class="btn" onclick="go('site3')"><img src="images/btn3.png"></div>
+    <div class="btn" onclick="go('site4')"><img src="images/btn4.png"></div>
+    <div class="btn" onclick="go('site5')"><img src="images/btn5.png"></div>
   </div>
 
   <!-- EMBED VIEW -->
@@ -249,7 +179,7 @@
     <iframe id="frame"></iframe>
   </div>
 
-  <!-- FOOTER TEXT -->
+  <!-- FOOTER TEXT (EDIT THIS) -->
   <div id="footer">
     © *Solar Smash Is Broken Currently Roblox Is Fixed However* If This Gets Banned Put The Link As: studyingforexams.github.io/School
   </div>
@@ -264,17 +194,8 @@
       site5: "https://freegamesunblocked76.github.io/retro-bowl/"
     };
 
-    const title = document.getElementById("title");
-    const footer = document.getElementById("footer");
-    const oasisLogoContainer = document.getElementById("oasis-logo-container");
-
     function go(page) {
       location.hash = page;
-    }
-
-    function hideLogo() {
-      oasisLogoContainer.style.opacity = "0";
-      oasisLogoContainer.style.pointerEvents = "none";
     }
 
     function loadPage() {
@@ -287,18 +208,10 @@
         menu.style.display = "none";
         viewer.style.display = "block";
         frame.src = sites[hash];
-
-        title.classList.add("hidden");
-        footer.classList.add("hidden");
       } else {
         menu.style.display = "flex";
         viewer.style.display = "none";
         frame.src = "";
-
-        title.classList.remove("hidden");
-        footer.classList.remove("hidden");
-        oasisLogoContainer.style.opacity = "1"; // show logo again when returning
-        oasisLogoContainer.style.pointerEvents = "auto";
       }
     }
 
@@ -308,7 +221,7 @@
     /* ===== PARTICLES ===== */
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
-    let w, h;
+    let w, h, particles;
 
     function resize() {
       w = canvas.width = window.innerWidth;
@@ -318,7 +231,7 @@
     window.addEventListener("resize", resize);
     resize();
 
-    const particles = Array.from({ length: 40 }, () => ({
+    particles = Array.from({ length: 40 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
       r: Math.random() * 2 + 0.5,
