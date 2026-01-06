@@ -79,7 +79,7 @@
       transition: opacity 0.35s ease;
     }
 
-    /* ===== OASIS LOGO WITH ENHANCED PURPLE GLOW ===== */
+    /* ===== OASIS LOGO WITH ROTATING SHIMMER ===== */
     #oasis-logo-container {
       position: fixed;
       top: 120px; /* slightly below top, above title */
@@ -93,6 +93,8 @@
       justify-content: center;
       align-items: center;
       z-index: 5;
+      overflow: visible;
+      transition: opacity 0.3s ease;
     }
 
     #oasis-logo {
@@ -102,8 +104,24 @@
       filter: drop-shadow(0 0 20px #c06cff)
               drop-shadow(0 0 35px #a64fff)
               drop-shadow(0 0 50px #8f3fff);
-      animation: pulse 2.5s ease-in-out infinite;
+      animation: pulse 2.5s ease-in-out infinite, shimmerRotate 12s linear infinite;
       transition: filter 0.3s ease, transform 0.3s ease;
+      z-index: 6;
+      position: relative;
+    }
+
+    /* Rotating shimmer effect behind the logo */
+    #oasis-logo-container::after {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(200,120,255,0.3), rgba(180,70,255,0.3), rgba(200,120,255,0.3));
+      animation: rotateHalo 8s linear infinite;
+      z-index: 1;
     }
 
     @keyframes pulse {
@@ -119,6 +137,16 @@
                 drop-shadow(0 0 45px #b46bff)
                 drop-shadow(0 0 60px #a64fff);
       }
+    }
+
+    @keyframes shimmerRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateHalo {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* ===== FOOTER TEXT ===== */
@@ -225,11 +253,11 @@
 
   <!-- MENU -->
   <div id="menu">
-    <div class="btn" onclick="go('site1')"><img src="images/btn1.png"></div>
-    <div class="btn" onclick="go('site2')"><img src="images/btn2.png"></div>
-    <div class="btn" onclick="go('site3')"><img src="images/btn3.png"></div>
-    <div class="btn" onclick="go('site4')"><img src="images/btn4.png"></div>
-    <div class="btn" onclick="go('site5')"><img src="images/btn5.png"></div>
+    <div class="btn" onclick="go('site1'); hideLogo()"><img src="images/btn1.png"></div>
+    <div class="btn" onclick="go('site2'); hideLogo()"><img src="images/btn2.png"></div>
+    <div class="btn" onclick="go('site3'); hideLogo()"><img src="images/btn3.png"></div>
+    <div class="btn" onclick="go('site4'); hideLogo()"><img src="images/btn4.png"></div>
+    <div class="btn" onclick="go('site5'); hideLogo()"><img src="images/btn5.png"></div>
   </div>
 
   <!-- EMBED VIEW -->
@@ -255,9 +283,15 @@
 
     const title = document.getElementById("title");
     const footer = document.getElementById("footer");
+    const oasisLogoContainer = document.getElementById("oasis-logo-container");
 
     function go(page) {
       location.hash = page;
+    }
+
+    function hideLogo() {
+      oasisLogoContainer.style.opacity = "0";
+      oasisLogoContainer.style.pointerEvents = "none";
     }
 
     function loadPage() {
@@ -280,6 +314,8 @@
 
         title.classList.remove("hidden");
         footer.classList.remove("hidden");
+        oasisLogoContainer.style.opacity = "1"; // show logo again when returning
+        oasisLogoContainer.style.pointerEvents = "auto";
       }
     }
 
