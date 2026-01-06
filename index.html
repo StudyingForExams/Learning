@@ -2,11 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>The Oasis</title>
+  <title>Oasis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Bubble Font -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/oasis.png" />
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="images/oasis.png" />
 
   <style>
     /* ===== RESET ===== */
@@ -47,7 +53,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* ===== PARTICLE CANVAS ===== */
+    /* ===== PARTICLES ===== */
     canvas {
       position: fixed;
       inset: 0;
@@ -69,8 +75,27 @@
       text-shadow:
         0 0 12px rgba(200, 120, 255, 0.6),
         0 0 24px rgba(120, 60, 255, 0.4);
-      pointer-events: none;
       z-index: 5;
+      transition: opacity 0.35s ease;
+    }
+
+    /* ===== FOOTER TEXT ===== */
+    #footer {
+      position: fixed;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.4px;
+      z-index: 3;
+      transition: opacity 0.35s ease;
+    }
+
+    /* ===== HIDDEN STATE ===== */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
     /* ===== MENU ===== */
@@ -141,19 +166,6 @@
       transform: scale(1.1);
       background: rgba(60, 0, 120, 0.85);
     }
-
-    /* ===== FOOTER TEXT ===== */
-    #footer {
-      position: fixed;
-      bottom: 40px; /* leaves breathing room */
-      width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 0.4px;
-      z-index: 3;
-      pointer-events: none;
-    }
   </style>
 </head>
 <body>
@@ -162,7 +174,7 @@
   <canvas id="particles"></canvas>
 
   <!-- TITLE -->
-  <div id="title">The Oasis</div>
+  <div id="title">Oasis</div>
 
   <!-- MENU -->
   <div id="menu">
@@ -179,9 +191,9 @@
     <iframe id="frame"></iframe>
   </div>
 
-  <!-- FOOTER TEXT (EDIT THIS) -->
+  <!-- FOOTER TEXT -->
   <div id="footer">
-    © *Solar Smash Is Broken Currently Roblox Is Fixed However* If This Gets Banned Put The Link As: studyingforexams.github.io/School
+    © *Solar Smash Is Broken Currently Roblox Is Fixed However It Might Be Buggy If You Get An Error Refresh The Page* If This Gets Banned Put The Link As: studyingforexams.github.io/School
   </div>
 
   <script>
@@ -193,6 +205,9 @@
       site4: "https://studyingforexams.github.io/Solar-Smash/",
       site5: "https://freegamesunblocked76.github.io/retro-bowl/"
     };
+
+    const title = document.getElementById("title");
+    const footer = document.getElementById("footer");
 
     function go(page) {
       location.hash = page;
@@ -208,10 +223,16 @@
         menu.style.display = "none";
         viewer.style.display = "block";
         frame.src = sites[hash];
+
+        title.classList.add("hidden");
+        footer.classList.add("hidden");
       } else {
         menu.style.display = "flex";
         viewer.style.display = "none";
         frame.src = "";
+
+        title.classList.remove("hidden");
+        footer.classList.remove("hidden");
       }
     }
 
@@ -221,7 +242,7 @@
     /* ===== PARTICLES ===== */
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
-    let w, h, particles;
+    let w, h;
 
     function resize() {
       w = canvas.width = window.innerWidth;
@@ -231,7 +252,7 @@
     window.addEventListener("resize", resize);
     resize();
 
-    particles = Array.from({ length: 40 }, () => ({
+    const particles = Array.from({ length: 40 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
       r: Math.random() * 2 + 0.5,
