@@ -79,26 +79,45 @@
       transition: opacity 0.35s ease;
     }
 
-    /* ===== OASIS LOGO ===== */
-    #oasis-logo {
-      display: block;
-      margin: 16px auto 0; /* centered below title */
-      width: 120px;
-      height: 120px;
-      filter: drop-shadow(0 0 15px #b46bff); /* soft purple glow */
-      animation: pulse 2.5s ease-in-out infinite;
-      transition: filter 0.3s ease;
+    /* ===== OASIS LOGO WITH ENHANCED PURPLE GLOW ===== */
+    #oasis-logo-container {
+      position: fixed;
+      top: 120px; /* slightly below top, above title */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180, 107, 255, 0.4) 60%, transparent 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       z-index: 5;
+    }
+
+    #oasis-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 20px #c06cff)
+              drop-shadow(0 0 35px #a64fff)
+              drop-shadow(0 0 50px #8f3fff);
+      animation: pulse 2.5s ease-in-out infinite;
+      transition: filter 0.3s ease, transform 0.3s ease;
     }
 
     @keyframes pulse {
       0%, 100% {
         transform: scale(1);
-        filter: drop-shadow(0 0 15px #b46bff);
+        filter: drop-shadow(0 0 20px #c06cff)
+                drop-shadow(0 0 35px #a64fff)
+                drop-shadow(0 0 50px #8f3fff);
       }
       50% {
         transform: scale(1.08);
-        filter: drop-shadow(0 0 25px #d8b4ff);
+        filter: drop-shadow(0 0 30px #d8b4ff)
+                drop-shadow(0 0 45px #b46bff)
+                drop-shadow(0 0 60px #a64fff);
       }
     }
 
@@ -200,7 +219,9 @@
   <div id="title">The Oasis</div>
 
   <!-- OASIS LOGO -->
-  <img id="oasis-logo" src="images/oasis.png" alt="Oasis Logo">
+  <div id="oasis-logo-container">
+    <img id="oasis-logo" src="images/oasis.png" alt="Oasis Logo">
+  </div>
 
   <!-- MENU -->
   <div id="menu">
